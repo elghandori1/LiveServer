@@ -54,7 +54,7 @@ int main()
 
         // Extract requested file from HTTP GET request
         std::string request(buffer);
-        std::string requested_file = "index.html"; // Default file
+        std::string requested_file = "index.php"; // Default file
 
         size_t pos = request.find("GET ");
         if (pos != std::string::npos) {
@@ -63,37 +63,67 @@ int main()
             std::string url = request.substr(start, end - start);
 
             if (url == "/") {
-                requested_file = "index.html"; // Default to index page
+                requested_file = "index.php"; // Default to index page
             } else {
                 requested_file = url.substr(1);
             }
         }
 
-        // Open the requested HTML file
-        std::ifstream html_file("./Public/" + requested_file);
         std::ostringstream response;
+        std::string file_path = "./Public/" + requested_file;
 
-        if (html_file.is_open())
+        // Check if the requested file is a PHP file
+        if (requested_file.substr(requested_file.find_last_of(".") + 1) == "php")
         {
-            std::string html_content((std::istreambuf_iterator<char>(html_file)),
+            // Run PHP script using system command
+            std::string command = "php " + file_path;
+            FILE* php_output = popen(command.c_str(), "r");
+            if (php_output) {
+                std::ostringstream php_result;
+                char buffer[128];
+                while (fgets(buffer, sizeof(buffer), php_output) != NULL) {
+                    php_result << buffer;
+                }
+                pclose(php_output);
+
+                // Construct HTTP response with PHP output
+                std::string php_content = php_result.str();
+                response << "HTTP/1.1 200 OK\r\n";
+                response << "Content-Type: text/html\r\n";
+                response << "Content-Length: " << php_content.length() << "\r\n";
+                response << "\r\n";
+                response << php_content;
+            } else {
+                response << "HTTP/1.1 500 Internal Server Error\r\n";
+                response << "Content-Type: text/html\r\n";
+                response << "\r\n";
+                response << "<html><body><h1>500 Internal Server Error</h1></body></html>";
+            }
+        } else {
+            // Serve static files (HTML, CSS, JS, etc.)
+            std::ifstream file(file_path);
+            if (file.is_open())
+            {
+                std::string content((std::istreambuf_iterator<char>(file)),
                                      std::istreambuf_iterator<char>());
 
-            // Construct HTTP response
-            response << "HTTP/1.1 200 OK\r\n";
-            response << "Content-Type: text/html\r\n";
-            response << "Content-Length: " << html_content.length() << "\r\n";
-            response << "\r\n";
-            response << html_content;
+                // Construct HTTP response
+                response << "HTTP/1.1 200 OK\r\n";
+                response << "Content-Type: text/html\r\n";
+                response << "Content-Length: " << content.length() << "\r\n";
+                response << "\r\n";
+                response << content;
 
-            html_file.close();
-        } else {
-            // If file not found, return a 404 error page
-            std::string not_found = "<html><body><h1>404 Not Found</h1></body></html>";
-            response << "HTTP/1.1 404 Not Found\r\n";
-            response << "Content-Type: text/html\r\n";
-            response << "Content-Length: " << not_found.length() << "\r\n";
-            response << "\r\n";
-            response << not_found;
+                file.close();
+            } else {
+                // If file not found, return a 404 error page
+                std::string not_found = "<html><body><h1>404 Not Found</h1></body></html>";
+                response << "HTTP/1.1 404 Not Found\r\n";
+                response << "Content-Type: text/html\r\n";
+                response << "Content-Length: " << not_found.length() << "\r\n";
+                response << "\r\n";
+                response << not_found;
+            }
         }
 
         // Send response to client
