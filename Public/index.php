@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Page</title>
+    <title>My Web Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,31 +17,26 @@
             color: #fff;
             animation: fadeIn 1s ease-in-out;
         }
+
         .container {
             text-align: center;
-            max-width: 700px;
-            padding: 30px;
-            background: rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             animation: slideUp 0.8s ease-in-out;
         }
 
         h1 {
             font-size: 3rem;
-            margin-bottom: 15px;
-            color: #f1c40f;
-        }
-
-        p {
-            font-size: 1.3rem;
-            line-height: 1.6;
             margin-bottom: 20px;
+            color: #f1c40f;
         }
 
         a {
             display: inline-block;
-            padding: 12px 25px;
+            padding: 10px 20px;
             font-size: 1.2rem;
             color: #fff;
             text-decoration: none;
@@ -55,7 +50,7 @@
             color: #2c3e50;
         }
 
-        /* Page loading animations */
+        /* Page loading animation */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -75,16 +70,12 @@
                 opacity: 1;
             }
         }
-
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>About</h1>
-        <p>For source code of the server, visit the GitHub repository: 
-            <a href="https://github.com/elghandori1/miniWebServer" target="_blank">GitHub Repo</a>
-        </p>
-        <a href="/">Back to Home</a>
+       <h1>Hello <?php echo "world"?></h1>
+        <a href="About.php">About</a>
     </div>
 </body>
 </html>
