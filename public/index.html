@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Simple C++ Web Server</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Simple C++ Web Server</h1>
+    <p>This is a lightweight HTTP server built using C++ that runs on <strong>localhost:8080</strong>.</p>
+    <h2>About the Application</h2>
+    <p>This application is a basic web server that:</p>
+    <ul>
+        <li>Serves static files (like this HTML page) from the <code>public</code> directory for GET requests.</li>
+        <li>Handles POST requests by echoing back the data sent to it.</li>
+        <li>Supports basic HTTP status codes:
+            <ul>
+                <li><strong>200 OK</strong>: Successful request</li>
+                <li><strong>404 Not Found</strong>: File not found</li>
+                <li><strong>405 Method Not Allowed</strong>: Unsupported HTTP method</li>
+            </ul>
+        </li>
+    </ul>
+    <h2>How to use this server:</h2>
+    <ol>
+        <li>Compile the server with <b>make</b></li>
+        <li>Run the server with <b>./server</b></li>
+        <li>Open your browser and visit <b>http://localhost:8080</b></li>
+        <li>To stop the server, press <b>Ctrl+C</b> in the terminal</li>
+    </ol>
+</body>
+</html>
