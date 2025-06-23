@@ -28,6 +28,7 @@
     <ul>
         <li>Serves static files (like this HTML page) from the <code>public</code> directory for GET requests.</li>
         <li>Handles POST requests by echoing back the data sent to it.</li>
+        <li>Reads the content of PHP files</li>
         <li>Supports basic HTTP status codes:
             <ul>
                 <li><strong>200 OK</strong>: Successful request</li>
@@ -39,9 +40,10 @@
     <h2>How to use this server:</h2>
     <ol>
         <li>Compile the server with <b>make</b></li>
-        <li>Run the server with <b>./server</b></li>
+        <li>Run the server with <b>./liveserver</b></li>
         <li>Open your browser and visit <b>http://localhost:8080</b></li>
-        <li>To stop the server, press <b>Ctrl+C</b> in the terminal</li>
+        <li>To stop the server, press <b>Ctrl+C</b> in the terminal then <b>make fclean</b></li>
     </ol>
+    <span class="warning" style="color: #d63030;"><strong>Note:</strong> This server is designed to work exclusively on Linux operating systems.</span>
 </body>
 </html>

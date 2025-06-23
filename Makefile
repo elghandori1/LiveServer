@@ -1,5 +1,6 @@
-NAME = server
-SRC  = server.cpp utils.cpp
+NAME = liveserver
+
+SRC  = server/server.cpp server/HttpServer.cpp server/methods.cpp server/utils/utils.cpp
 OBJ  = $(SRC:.cpp=.o)
 CC   = g++
 CFLAGS = -std=c++17 -Wall -Wextra -Werror
